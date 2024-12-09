@@ -1,0 +1,24 @@
+.contact-page {
+  text-align: center;
+  padding: 20px;
+}
+
+.contact-page h2 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.contact-info {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 15px 0;
+}
+
+.contact-info a {
+  color: #0073e6;
+  text-decoration: none;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
+}
