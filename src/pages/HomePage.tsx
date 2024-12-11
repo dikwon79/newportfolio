@@ -18,8 +18,8 @@ const PicContainer = styled.div`
 `;
 
 const ProfilePic = styled.img`
-  width: 250px;
-  height: 250px;
+  width: 10rem;
+  height: 10rem;
   border-radius: 50%;
 `;
 
