@@ -6,6 +6,7 @@ import background from "../images/bookfirstpage.png";
 import AboutPage from "../pages/AboutPage";
 import Skills from "../pages/Skills";
 import Experience from "../pages/Experiences";
+import { useEffect, useState } from "react";
 const FirstPageBackground = styled.div`
   height: 100%;
   width: 100%;
@@ -28,7 +29,6 @@ const pages = [
   { title: "Contact", component: <PageContent pageName="Contact" /> },
 ];
 
-// Flipbook의 스타일링
 const FlipbookContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -36,21 +36,30 @@ const FlipbookContainer = styled.div`
   height: 100vh;
   background-image: linear-gradient(
     rgba(224, 208, 179, 1),
-    /* 진한 베이지색 */ rgba(184, 151, 109, 1) /* 진한 갈색 */
+    rgba(184, 151, 109, 1)
   );
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    height: 100%; /* 모바일에서는 100% 높이 */
+    flex-direction: column;
+  }
 `;
 
 const Book = styled(FlipPage)`
   border: 1px solid #ccc;
-
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: row;
   color: black;
+
+  @media (max-width: 768px) {
+    width: 90%; /* 모바일에서는 화면 폭의 90% */
+    height: auto; /* 높이 자동 조정 */
+  }
 `;
 
 const DoublePage = styled.article`
@@ -58,6 +67,10 @@ const DoublePage = styled.article`
   width: 100%;
   height: 100%;
   background-color: #ede7f6;
+
+  @media (max-width: 768px) {
+    flex-direction: column; /* 모바일에서는 세로로 배치 */
+  }
 `;
 
 const Page = styled.div`
@@ -75,16 +88,37 @@ const LeftPage = styled(Page)`
 const RightPage = styled(Page)``;
 
 const FlipBook = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  const [windowsize, setWinsize] = useState([
+    window.innerWidth,
+    window.innerHeight,
+  ]);
+
+  // 윈도우 크기를 감지하여 isMobile 값 업데이트
+  useEffect(() => {
+    const updateSize = () => {
+      setIsMobile(window.innerWidth <= 768); // 모바일인지 확인 (768px 이하)
+      setWinsize([window.innerWidth, window.innerHeight]);
+    };
+
+    updateSize(); // 초기 크기 확인
+    window.addEventListener("resize", updateSize); // 화면 크기 변화 감지
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("resize", updateSize);
+    };
+  }, []);
   return (
     <FlipbookContainer>
       <Book
         showSwipeHint
         uncutPages
-        orientation="horizontal"
+        orientation={isMobile ? "vertical" : "horizontal"} // 모바일일 경우 vertical
         pageBackground="#fffdf8"
         animationDuration="400"
-        width={window.innerWidth * 0.7} // 화면 크기에 맞게 책 크기 설정
-        height={window.innerHeight * 0.9}
+        width={windowsize[0] * 0.7} // 화면 크기에 맞게 책 크기 설정
+        height={windowsize[1] * 0.9}
       >
         {pages
           .map((_, index) => index) // 인덱스를 먼저 추출
