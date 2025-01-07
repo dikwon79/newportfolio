@@ -10,44 +10,46 @@ const ProfileSection = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%; // 부모 크기 맞춤
 
   @media (max-width: 768px) {
-    padding: 0.5rem;
+    padding: 1rem 1rem; // 모바일에서는 여백 조정
+    align-items: center;
+    flex-direction: column;
+    height: auto; // 부모 크기 맞춤
+  }
+`;
+const PicContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 1%;
+`;
+
+const ProfilePic = styled.img`
+  width: 60%;
+  max-width: 380px;
+  height: auto;
+  border-radius: 50%;
+
+  @media (max-width: 768px) {
+    width: 70%; // 모바일에서 더 크게
+    max-width: 150px;
   }
 `;
 
 const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
+  align-items: center; // 모바일에서 중앙 정렬
+  text-align: center; // 텍스트 중앙 정렬
   padding: 0.5rem 1rem;
 
   @media (max-width: 768px) {
-    align-items: center; /* 중앙 정렬 */
-    margin-left: 0; /* 좌측 마진 제거 */
-  }
-`;
-
-const PicContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 1%;
-`;
-
-const ProfilePic = styled.img`
-  width: 60%; /* 부모 크기의 60% */
-  max-width: 380px; /* 최대 크기 제한 */
-  height: auto; /* 비율 유지 */
-  border-radius: 50%; /* 둥글게 */
-
-  @media (max-width: 768px) {
-    width: 70%; /* 모바일에서는 크기를 늘림 */
-    max-width: 150px;
+    margin-left: 0; // 모바일에서 좌측 마진 제거
   }
 `;
 
@@ -98,12 +100,17 @@ const TextP2 = styled.p`
 
 const BtnContainer = styled.div`
   display: flex;
+  flex-direction: row; // 기본 가로 방향
   gap: 1rem;
   margin: 0.5rem 1rem;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
+
+  @media (max-width: 768px) {
+    flex-direction: column; // 모바일에서는 세로로 배치
+    gap: 0.8rem;
+  }
 `;
 
 const SocialsContainer = styled.div`
@@ -111,8 +118,28 @@ const SocialsContainer = styled.div`
   gap: 1rem;
   align-items: center;
   justify-content: center;
-  height: 100%;
   width: 100%;
+  height: auto;
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+  }
+`;
+
+const SocialIcon = styled.img`
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    width: 25px; // 모바일에서 크기 조정
+    height: 25px;
+  }
 `;
 
 const Btn = styled.button`
@@ -145,22 +172,6 @@ const Btn = styled.button`
   }
 `;
 
-const SocialIcon = styled.img`
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-
-  &:hover {
-    transform: scale(1.1);
-  }
-
-  @media (max-width: 768px) {
-    width: 25px;
-    height: 25px; /* 크기 축소 */
-  }
-`;
-
 const SocialIcon2 = styled.img`
   width: 40px;
   height: 40px;
@@ -181,12 +192,19 @@ const HomeContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh; // height 대신 min-height 사용
   background-image: url("");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+
+  @media (max-width: 768px) {
+    width: 100vw;
+    height: auto; // 모바일에서 height 조정
+    padding-top: 5vh; // 화면 상단 여백 추가
+  }
 `;
+
 function HomePage() {
   return (
     <HomeContainer>

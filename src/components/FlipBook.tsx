@@ -8,7 +8,7 @@ import Skills from "../pages/Skills";
 import Experience from "../pages/Experiences";
 import { useEffect, useState } from "react";
 const FirstPageBackground = styled.div`
-  height: 100%;
+  height: 100vh;
   width: 100%;
   background-image: url(${background});
   background-size: cover;
@@ -17,6 +17,10 @@ const FirstPageBackground = styled.div`
   align-items: center;
 
   overflow: hidden;
+  @media (max-width: 768px) {
+    height: 50vh;
+    width: 100%;
+  }
 `;
 
 const pages = [
@@ -33,7 +37,8 @@ const FlipbookContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100vh; /* 화면 높이를 100%로 설정 */
+  width: 100vw; /* 화면 너비를 100%로 설정 */
   background-image: linear-gradient(
     rgba(224, 208, 179, 1),
     rgba(184, 151, 109, 1)
@@ -42,9 +47,11 @@ const FlipbookContainer = styled.div`
   background-position: center;
   background-attachment: fixed;
   overflow: hidden;
+  padding: 1rem;
 
   @media (max-width: 768px) {
-    height: 100%; /* 모바일에서는 100% 높이 */
+    height: 100vh; /* 모바일에서는 100% 높이 */
+    width: 100vw;
     flex-direction: column;
   }
 `;
@@ -54,12 +61,8 @@ const Book = styled(FlipPage)`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: row;
-  color: black;
-
-  @media (max-width: 768px) {
-    width: 90%; /* 모바일에서는 화면 폭의 90% */
-    height: auto; /* 높이 자동 조정 */
-  }
+  color: inherit;
+  padding: 1rem;
 `;
 
 const DoublePage = styled.article`
@@ -79,6 +82,7 @@ const Page = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
+  width: 100%;
 `;
 
 const LeftPage = styled(Page)`
@@ -117,8 +121,8 @@ const FlipBook = () => {
         orientation={isMobile ? "vertical" : "horizontal"} // 모바일일 경우 vertical
         pageBackground="#fffdf8"
         animationDuration="400"
-        width={windowsize[0] * 0.7} // 화면 크기에 맞게 책 크기 설정
-        height={windowsize[1] * 0.9}
+        width={windowsize[0] * 0.8} // 화면 크기에 맞게 책 크기 설정
+        height={windowsize[1]}
       >
         {pages
           .map((_, index) => index) // 인덱스를 먼저 추출
