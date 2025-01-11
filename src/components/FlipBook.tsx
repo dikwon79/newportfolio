@@ -3,10 +3,12 @@ import PageContent from "./PageContent";
 import styled from "styled-components";
 import HomePage from "../pages/HomePage";
 import background from "../images/bookfirstpage.png";
-import AboutPage from "../pages/AboutPage";
+import AboutPage from "../pages/Education";
 import Skills from "../pages/Skills";
 import Experience from "../pages/Experiences";
 import { useEffect, useState } from "react";
+import Education from "../pages/Education";
+import ProjectsSection from "../pages/ProjectsPage";
 const FirstPageBackground = styled.div`
   height: 100vh;
   width: 100%;
@@ -28,8 +30,8 @@ const pages = [
   { title: "Home", component: <HomePage /> },
   { title: "SKILL", component: <Skills /> },
   { title: "Experience", component: <Experience /> },
-  { title: "About", component: <AboutPage /> },
-  { title: "Projects", component: <PageContent pageName="Projects" /> },
+  { title: "Education", component: <Education /> },
+  { title: "ProjectsPage", component: <ProjectsSection /> },
   { title: "Contact", component: <PageContent pageName="Contact" /> },
 ];
 
