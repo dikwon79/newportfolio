@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 // 경험 항목 타입 정의
-interface ExperienceItem {
+interface ExperienceItemInterface {
   title: string;
   company: string;
   duration: string;
   description: string;
 }
+
 // 컨테이너 스타일
 const ExperienceContainer = styled.div`
   display: flex;
@@ -18,47 +19,33 @@ const ExperienceContainer = styled.div`
   background-color: rgb(237, 231, 246);
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin: 0.8rem auto;
-  padding: 4rem;
-  width: 100%;
-  height: 100vh;
-  max-height: 100vh;
 
-  @media (max-width: 768px) {
-    padding: 1.5rem;
-  }
+  height: 100%;
+  width: 100%;
+  padding: 2rem;
+  box-sizing: border-box;
+  overflow-y: auto;
 `;
 
 const Title = styled.h2`
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   font-weight: bold;
   color: #007bff;
-  margin-bottom: 13%;
-
-  @media (max-width: 768px) {
-    font-size: 1.8rem;
-    text-align: center;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 1.6rem;
-  }
-  @media (max-height: 1000px) {
-    margin-bottom: 5%;
-  }
+  margin-bottom: 5%;
+  text-align: center;
 `;
 
 // 경험 목록 컨테이너 스타일
 const ExperienceList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 `;
 
 // 개별 경험 항목 스타일
 const ExperienceItem = styled.div`
   background-color: #fff;
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
@@ -67,48 +54,26 @@ const ExperienceItem = styled.div`
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
-
-  @media (max-width: 768px) {
-    padding: 1rem;
-  }
-`;
-
-// 항목 제목 스타일
-const ItemTitle = styled.h2`
-  font-size: 1.8rem;
-  color: #007bff;
-  margin-bottom: 0.5rem;
-
-  @media (max-width: 768px) {
-    font-size: 1.5rem;
-  }
 `;
 
 // 회사 이름 스타일
 const Company = styled.h3`
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: #555;
   margin-bottom: 0.5rem;
-
-  @media (max-width: 768px) {
-    font-size: 1.2rem;
-  }
 `;
 
 // 설명 텍스트 스타일
-const Description = styled.p`
-  font-size: 1rem;
+const Description = styled.div`
+  font-size: 0.9rem;
   color: #666;
-  line-height: 1.6;
-
-  @media (max-width: 768px) {
-    font-size: 0.9rem;
-  }
+  line-height: 1.4;
 `;
+
 const ReadMoreButton = styled.button`
   margin-top: 0.5rem;
   padding: 0.5rem 1rem;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: #fff;
   background-color: #007bff;
   border: none;
@@ -136,10 +101,9 @@ const ModalOverlay = styled.div`
 
 const ModalContent = styled.div`
   background: #fff;
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 8px;
-  max-width: 500px;
-  width: 90%;
+  max-width: 90%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 `;
 
@@ -155,7 +119,7 @@ const ModalCloseButton = styled.button`
   right: 1rem;
   background: none;
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   cursor: pointer;
   color: #666;
 
@@ -163,8 +127,9 @@ const ModalCloseButton = styled.button`
     color: #000;
   }
 `;
+
 // 경험 항목 목록
-const experiences: ExperienceItem[] = [
+const experiences: ExperienceItemInterface[] = [
   {
     title: "Software Engineer",
     company: "Ian logistics(Korea)",
@@ -172,7 +137,7 @@ const experiences: ExperienceItem[] = [
     description: `
      • Led the development of a project using PHP and Delphi for a logistics center, enabling label printing, inventory management, and  \
      expiration date tracking. This project has been generating a monthly revenue of $1,000 to me. 
-     • This project resulted in a labor cost savings of approximately $3,000 a month  and streamlined operations, reducing the average daily \
+     • This project resulted in a labor cost savings of approximately $3,000 a month and streamlined operations, reducing the average daily \
      working hours from 10 to 7 for the company.   
      • The web page was developed using PHP and JavaScript with MySQL as the database. For label printing, I created a REST API to receive \
      information from the web page and developed a Windows application using Delphi.
@@ -226,7 +191,7 @@ function Experience() {
             <Company>
               {experience.title} - {experience.company}
             </Company>
-            <Description>{experience.description.slice(0, 100)}...</Description>
+            <Description>{experience.description.slice(0, 200)}...</Description>
             <ReadMoreButton onClick={() => openModal(experience.description)}>
               Read More
             </ReadMoreButton>

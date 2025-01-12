@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 const SkillsContainer = styled.section`
@@ -6,36 +5,25 @@ const SkillsContainer = styled.section`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-
   background-color: rgb(237, 231, 246);
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin: 0.8rem auto;
-  padding: 4rem;
-  width: 100%;
-  height: 100vh;
-  max-height: 100vh;
-  overflow-y: auto;
-  overflow-x: hidden;
+  padding: 2rem; /* 내부 여백 */
+  height: 100%; /* 뷰포트 높이에 맞춤 */
+  width: 100%; /* 뷰포트 너비에 맞춤 */
+  box-sizing: border-box; /* 패딩 포함 크기 계산 */
+  overflow-y: auto; /* 내용이 넘칠 경우 스크롤 */
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   font-weight: bold;
   color: #222;
-  margin-bottom: 13%;
-
-  @media (max-width: 768px) {
-    font-size: 1.8rem;
-    text-align: center;
-  }
+  margin-bottom: 2rem; /* 타이틀 아래 여백 조정 */
+  text-align: center;
 
   @media (max-width: 480px) {
     font-size: 1.6rem;
-  }
-  /* 화면 높이가 작은 경우 */
-  @media (max-height: 1000px) {
-    margin-bottom: 5%;
   }
 `;
 
@@ -43,42 +31,29 @@ const CategoryBox = styled.div`
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 0.5rem; /* 여백 증가 */
-  margin-bottom: 7%;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 100%; /* 부모 요소에 맞춤 */
-  @media (max-height: 1000px) {
-    margin-bottom: 2%;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
 `;
 
 const CategoryTitle = styled.h3`
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: bold;
   color: #007bff;
   margin-bottom: 0.5rem;
-
-  @media (max-width: 768px) {
-    font-size: 1rem;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 0.8rem;
-  }
 `;
 
 const SkillsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); /* 크기 조절 */
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* 크기 조정 */
   gap: 0.5rem;
-
-  @media (max-width: 768px) {
-    gap: 0.5rem;
-    grid-template-columns: repeat(
-      auto-fit,
-      minmax(80px, 1fr)
-    ); /* 최소 크기 더 줄임 */
-  }
 `;
 
 const SkillCard = styled.div`
@@ -87,12 +62,12 @@ const SkillCard = styled.div`
   border-radius: 6px;
   padding: 0.5rem;
   text-align: center;
-  font-size: 0.8rem; /* 줄인 크기 */
+  font-size: 0.8rem;
   font-weight: 500;
   color: #555;
 
-  @media (max-width: 768px) {
-    font-size: 0.7rem; /* 모바일에서 더 작게 */
+  @media (max-width: 480px) {
+    font-size: 0.7rem;
   }
 `;
 
@@ -103,7 +78,7 @@ const Highlight = styled.span`
 
 const skillsData = [
   {
-    category: "Languages",
+    category: "🌐Languages",
     skills: [
       "Python",
       "Delphi",
@@ -117,7 +92,7 @@ const skillsData = [
     ],
   },
   {
-    category: "Web & Mobile",
+    category: "📱Web & Mobile",
     skills: [
       "React",
       "Next.js",
@@ -129,11 +104,11 @@ const skillsData = [
     ],
   },
   {
-    category: "Database",
+    category: "🗄️Database",
     skills: ["MySQL", "MongoDB", "Firebase"],
   },
   {
-    category: "Tools & Libraries",
+    category: "🛠️Tools & Libraries",
     skills: [
       "Kubernetes",
       "Docker",
@@ -144,7 +119,7 @@ const skillsData = [
     ],
   },
   {
-    category: "Methodologies",
+    category: "📋Methodologies",
     skills: [
       "Agile process",
       "OOP",
