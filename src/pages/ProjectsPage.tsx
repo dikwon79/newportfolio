@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import ReactPlayer from "react-player";
 import styled from "styled-components";
 
 const ProjectsContainer = styled.section`
@@ -49,6 +48,9 @@ const ProjectList = styled.div`
   gap: 0.5rem;
 `;
 const ProjectCard = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* 상단과 하단에 공간 분배 */
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -111,24 +113,53 @@ interface ProjectImgProps {
   src: string; // 이미지 URL 타입 정의
 }
 const ProjectImg = styled.div<ProjectImgProps>`
-  width: 100%; /* 부모 컨테이너의 너비를 기준 */
-  aspect-ratio: 16 / 9; /* 16:9 비율로 이미지 표시 */
-  background-image: url(${(props) => props.src}); /* 이미지 소스 설정 */
-  background-size: cover; /* 이미지 크기를 컨테이너에 맞춤 */
-  background-position: center; /* 이미지 중심 표시 */
-  border-radius: 8px; /* 모서리를 둥글게 설정 */
-  overflow: hidden; /* 자식 내용이 넘치지 않도록 숨김 */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 약간의 그림자 효과 */
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-image: url(${(props) => props.src});
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
 const ProjectVideo = styled.video<ProjectImgProps>`
-  width: 100%; /* 부모 컨테이너의 너비 */
-  aspect-ratio: 16 / 9; /* 16:9 비율로 설정 */
-  border-radius: 8px; /* 모서리를 둥글게 */
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 약간의 그림자 효과 */
-  object-fit: cover; /* 비디오가 컨테이너를 채우도록 크기 조정 */
-  background: #000; /* 비디오 로드 중 배경 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+  background: #000;
+`;
+const LinksContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem; /* 링크 간 간격 설정 */
+  margin-top: 0.5rem;
+
+  & a {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #007bff;
+    text-decoration: none;
+    background-color: #eef;
+    border-radius: 4px;
+    padding: 0.3rem 0.5rem;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #cce;
+    }
+    /* 링크 비활성화 스타일 */
+    &:disabled {
+      color: #aaa;
+      background-color: #f5f5f5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
 `;
 
 interface Project {
@@ -137,7 +168,8 @@ interface Project {
   techStack: string[];
   img: string;
   video: string;
-  duration: string;
+  githubLink: string;
+  appLink: string;
 }
 
 interface ProjectsSectionProps {
@@ -147,7 +179,7 @@ interface ProjectsSectionProps {
 const CardVariants = {
   normal: {
     scale: 1,
-    zIndex: 1, // 기본 zIndex 설정
+    zIndex: 1,
   },
   hover: {
     scale: 2,
@@ -165,7 +197,7 @@ const CardVariants2 = {
   },
   hover: {
     scale: 2,
-    y: -50,
+    y: -240,
     zIndex: 999,
     transition: {
       delay: 0.5,
@@ -191,26 +223,69 @@ function ProjectsSection({ projectData }: ProjectsSectionProps) {
             variants={index <= 2 ? CardVariants : CardVariants2}
             transition={{ type: "tween" }}
           >
-            <TechStack>
-              {project.techStack.map((tech, idx) => (
-                <span key={idx}>{tech}</span>
-              ))}
-            </TechStack>
-            <ProjectTitle>{project.title}</ProjectTitle>
-            {project.video ? (
-              <ProjectVideo
-                src={`/videos/${project.video}`}
-                loop
-                muted
-                controls
-                width="100%" // 원하는 크기 설정
-                height="40%"
-              />
-            ) : (
-              <ProjectImg src={`/projects/${project.img}`} />
-            )}
-
-            <ProjectDetails>{project.description}</ProjectDetails>
+            <div>
+              <TechStack>
+                {project.techStack.map((tech, idx) => (
+                  <span key={idx}>{tech}</span>
+                ))}
+              </TechStack>
+              <ProjectTitle>{project.title}</ProjectTitle>
+              {project.video ? (
+                <ProjectVideo
+                  src={`/videos/${project.video}`}
+                  loop
+                  muted
+                  controls
+                  width="100%"
+                  height="40%"
+                />
+              ) : (
+                <ProjectImg src={`/projects/${project.img}`} />
+              )}
+              <ProjectDetails>{project.description}</ProjectDetails>
+            </div>
+            <LinksContainer>
+              {project.githubLink ? (
+                <a
+                  href={project.githubLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  GitHub
+                </a>
+              ) : (
+                <a
+                  href="#"
+                  style={{
+                    pointerEvents: "none",
+                    cursor: "not-allowed",
+                    color: "#aaa",
+                  }}
+                >
+                  GitHub
+                </a>
+              )}
+              {project.appLink ? (
+                <a
+                  href={project.appLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  App
+                </a>
+              ) : (
+                <a
+                  href="#"
+                  style={{
+                    pointerEvents: "none",
+                    cursor: "not-allowed",
+                    color: "#aaa",
+                  }}
+                >
+                  App
+                </a>
+              )}
+            </LinksContainer>
           </ProjectCard>
         ))}
       </ProjectList>
