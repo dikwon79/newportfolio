@@ -22,6 +22,7 @@ const ExperienceContainer = styled.div`
 
   height: 100%;
   width: 100%;
+  border-radius: 10px;
   padding: 2rem;
   box-sizing: border-box;
   overflow-y: auto;

@@ -2,34 +2,31 @@ import styled from "styled-components";
 
 // 교과서 커버 배경 설정
 const CoverBackground = styled.div`
-  width: 100%;
   height: 100%;
-  background-color: #f5f5f5; /* 배경 단색 설정 */
+  width: 100%;
+  background: linear-gradient(to bottom, #f5e3cb, #b084cc);
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #2c2c2c;
-  text-align: center;
-  flex-direction: column;
-
-  @media (max-width: 768px) {
-    height: 50vh;
-  }
+  color: white;
 `;
 
-// 제목 담을 상자 스타일
 const TitleContainer = styled.div`
-  background-color: #ffffff;
-  border: 2px solid #2c2c2c;
-  padding: 30px 50px;
+  padding: 30px 40px;
   border-radius: 10px;
-  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
   max-width: 600px;
   text-align: center;
   margin-bottom: 20px;
 
+  // 오른쪽 하단으로 배치
+  position: fixed; /* 화면에 고정(스크롤 따라오게) */
+  right: 20px; /* 오른쪽 여백 */
+  bottom: 200px; /* 아래쪽 여백 */
+
   @media (max-width: 768px) {
     padding: 20px 30px;
+    right: 10px; /* 반응형에서 오른쪽 여백 줄이기 */
+    bottom: 10px; /* 반응형에서 아래쪽 여백 줄이기 */
   }
 `;
 
@@ -38,7 +35,7 @@ const MainTitle = styled.h1`
   font-size: 3rem;
   font-family: "Georgia", serif; /* 심플한 교과서 느낌의 폰트 */
   font-weight: bold;
-  color: #2c2c2c;
+  color: white;
   margin: 0;
   letter-spacing: 1.2px;
 
@@ -61,22 +58,13 @@ const SubTitle = styled.h2`
   }
 `;
 
-// 하단 장식 선
-const BottomLine = styled.div`
-  width: 100px;
-  height: 4px;
-  background-color: #2c2c2c;
-  margin-top: 20px;
-`;
-
 const Cover = () => {
   return (
     <CoverBackground>
       <TitleContainer>
-        <MainTitle>Kwon Dongil</MainTitle> {/* 교과서 제목 */}
-        <SubTitle>portfolio</SubTitle> {/* 부제 */}
+        <MainTitle>PORTFOLIO</MainTitle> {/* 교과서 제목 */}
+        <SubTitle>Dongil Kwon</SubTitle> {/* 부제 */}
       </TitleContainer>
-      <BottomLine />
     </CoverBackground>
   );
 };

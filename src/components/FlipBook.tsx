@@ -12,16 +12,15 @@ import { IFlipSetting } from "../types/settings";
 import FlipPage from "react-pageflip";
 import { motion } from "framer-motion"; // Import motion
 import FirstPage from "../pages/Cover";
+import Contents from "../pages/firstPage";
 
 // 첫 번째 페이지 배경 설정
 const FirstPageBackground = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
   height: 100%;
-  background-color: #f5f5f5; /* 배경 단색 설정 */
-  overflow: hidden; /* 부모 영역을 넘어가지 않도록 설정 */
+  width: 100%;
+  background: linear-gradient(to bottom, #f5e3cb, #b084cc);
+
+  border-radius: 10px;
 
   @media (max-width: 768px) {
     height: 50vh;
@@ -30,7 +29,7 @@ const FirstPageBackground = styled.div`
 
 const pages = [
   { title: "cover", component: <FirstPage /> },
-  { title: "list", component: <FirstPageBackground /> },
+  { title: "Contents", component: <Contents /> },
   { title: "Home", component: <HomePage /> },
   { title: "SKILL", component: <Skills /> },
   { title: "Experience", component: <Experience /> },
@@ -58,6 +57,7 @@ const FlipbookContainer = styled.div`
   background-color: black;
   background-size: cover;
   background-position: center;
+
   overflow: hidden;
   padding: 0;
   margin: 0;
@@ -65,7 +65,7 @@ const FlipbookContainer = styled.div`
 
 const Book = styled(FlipPage)<IFlipSetting>`
   width: 100%;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 1;
@@ -87,12 +87,15 @@ const FlipBook = () => {
 
   // Motion animation for scaling
   const scaleVariants = {
-    initial: { scale: 0.2, rotate: -20 }, // Start small and not rotated
+    initial: {
+      x: -500, // 시작 위치 (화면 중앙 가로)
+      y: 0, // 시작 위치 (화면 중앙 세로)
+    },
     animate: {
-      scale: 1,
-      rotate: 0,
-      transition: { duration: 3, ease: "easeInOut" },
-    }, // Scale to normal size, no rotation
+      x: 0, // 오른쪽 하단 위치 조정 (여백 포함)
+      y: 0, // 하단 위치 조정 (여백 포함)
+      transition: { duration: 2, ease: "easeInOut" },
+    },
   };
 
   // 페이지 로드 후 자동으로 첫 페이지 넘기기
