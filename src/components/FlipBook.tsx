@@ -4,7 +4,7 @@ import Skills from "../pages/Skills";
 import Experience from "../pages/Experiences";
 import { useEffect, useRef, useState } from "react";
 import Education from "../pages/Education";
-import ProjectsSection from "../pages/ProjectsPage";
+import ProjectsSection from "../images/pro";
 import Volunteering from "../pages/Volunteering";
 import Contact from "../pages/Contact";
 import { myPracticum, myselling } from "../data/projectData";
@@ -13,6 +13,8 @@ import FlipPage from "react-pageflip";
 import { motion } from "framer-motion"; // Import motion
 import FirstPage from "../pages/Cover";
 import Contents from "../pages/firstPage";
+import ProjectPage from "../pages/ProjectsPage";
+import ProjectSecondPage from "../pages/projectSecondPage";
 
 // 첫 번째 페이지 배경 설정
 const FirstPageBackground = styled.div`
@@ -33,16 +35,17 @@ const pages = [
   { title: "Home", component: <HomePage /> },
   { title: "SKILL", component: <Skills /> },
   { title: "Experience", component: <Experience /> },
+  {
+    title: "ProjectsPage",
+    component: <ProjectPage projectData={myselling} />,
+  },
+  {
+    title: "ProjectsPage2",
+    component: <ProjectSecondPage projectData={myPracticum} />,
+  },
   { title: "Education", component: <Education /> },
   { title: "Volunteering", component: <Volunteering /> },
-  {
-    title: "ProjectsPage",
-    component: <ProjectsSection projectData={myselling} />,
-  },
-  {
-    title: "ProjectsPage",
-    component: <ProjectsSection projectData={myPracticum} />,
-  },
+
   { title: "Contact", component: <Contact /> },
   { title: "last cover", component: <FirstPageBackground /> },
   { title: "last cover", component: <FirstPageBackground /> },

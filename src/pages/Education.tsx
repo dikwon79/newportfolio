@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 // 교육 항목 타입 정의
@@ -9,40 +8,70 @@ interface EducationItemInterface {
   description: string;
 }
 
-// 컨테이너 스타일
+// Styled Components
 const EducationContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-
-  background-color: rgb(237, 231, 246);
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
   width: 100%;
   height: 100%;
+  border-radius: 10px;
+  border-left: 1px solid #a263c9;
+  background: linear-gradient(to bottom, #f5e3cb, #b084cc);
+
   box-sizing: border-box;
+  padding: 5px;
+`;
+
+const OuterBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  height: 95%;
+  border: 2px solid #5a25b0;
+  border-radius: 10px;
+  overflow: hidden;
+`;
+
+const TopBox = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-bottom: 2px solid #5a25b0;
+`;
+
+const TopTitle = styled.div`
+  position: fixed;
+  font-family: "Georgia", serif;
+  top: 20px;
+  right: 50px;
+  font-size: 3rem;
+  color: #5a25b0;
+  font-weight: bold;
+`;
+
+const MiddleBox = styled.div`
+  flex: 5;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 1px;
+  border-bottom: 2px solid #5a25b0;
+  padding-top: 0.5rem;
   overflow-y: auto;
 `;
 
-// 제목 스타일
-const Title = styled.h2`
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #007bff;
-  margin-bottom: 5%;
-  text-align: center;
-`;
-
-// 교육 목록 컨테이너 스타일
 const EducationList = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1rem;
+  width: 100%;
+  padding: 0;
+  box-sizing: border-box;
 `;
 
-// 개별 항목 스타일
 const EducationItem = styled.div`
   background-color: #fff;
   padding: 1rem;
@@ -56,18 +85,23 @@ const EducationItem = styled.div`
   }
 `;
 
-// 기관 이름 스타일
 const Institution = styled.h3`
   font-size: 1.2rem;
   color: #555;
   margin-bottom: 0.5rem;
 `;
 
-// 설명 텍스트 스타일
-const Description = styled.div`
-  font-size: 0.9rem;
+const Description = styled.ul`
+  font-size: 1.2rem;
   color: #666;
   line-height: 1.4;
+`;
+
+const Duration = styled.div`
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #5a25b0;
+  margin-bottom: 0.5rem;
 `;
 
 // 교육 항목 데이터
@@ -85,27 +119,36 @@ const education: EducationItemInterface[] = [
 ];
 
 // Education 컴포넌트
-const Education: React.FC = () => {
+function Education() {
   return (
     <EducationContainer>
-      <Title>Education</Title>
-      <EducationList>
-        {education.map((edu, index) => (
-          <EducationItem key={index}>
-            <Description>
-              <strong>📅</strong> {edu.duration}
-            </Description>
-
-            <Institution>
-              {edu.degree} - {edu.institution}
-            </Institution>
-
-            <Description>{edu.description.slice(0, 200)}...</Description>
-          </EducationItem>
-        ))}
-      </EducationList>
+      <OuterBox>
+        <TopBox>
+          <TopTitle>Education</TopTitle>
+        </TopBox>
+        <MiddleBox>
+          <EducationList>
+            {education.map((edu, index) => (
+              <EducationItem key={index}>
+                <Duration>📅 {edu.duration}</Duration>
+                <Institution>
+                  {edu.degree} - {edu.institution}
+                </Institution>
+                <Description>
+                  {edu.description
+                    .split("•")
+                    .filter((line) => line.trim() !== "")
+                    .map((line, index) => (
+                      <li key={index}>{line.trim()}</li>
+                    ))}
+                </Description>
+              </EducationItem>
+            ))}
+          </EducationList>
+        </MiddleBox>
+      </OuterBox>
     </EducationContainer>
   );
-};
+}
 
 export default Education;

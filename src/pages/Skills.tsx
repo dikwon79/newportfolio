@@ -91,7 +91,7 @@ const SkillList = styled.div`
 const SkillItem = styled.span`
   background-color: #f9f9f9;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 10%;
   padding: 0.5rem;
   font-size: 1rem;
   color: #555;

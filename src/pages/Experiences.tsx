@@ -1,6 +1,87 @@
 import { useState } from "react";
 import styled from "styled-components";
 
+const ExperienceContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border-left: 1px solid #a263c9;
+  background: linear-gradient(to bottom, #8fbed6, #b084cc);
+  box-sizing: border-box; /* 패딩 포함 */
+  padding: 5px;
+`;
+
+const OuterBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  height: 95%;
+  border: 2px solid #5a25b0;
+  border-radius: 10px;
+  overflow: hidden;
+`;
+
+const HeaderBox = styled.div`
+  flex: 1.35;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: white; /* 흰색 배경 */
+`;
+const HeaderTitle = styled.div`
+  position: fixed;
+  font-family: "Georgia", serif; /* 심플한 교과서 느낌의 폰트 */
+  top: 20px; /* 상단에서 3px 만큼 아래로 이동 */
+  left: 50px; /* 왼쪽에서 10px 만큼 오른쪽으로 이동 */
+  font-size: 3rem;
+
+  color: #5a25b0;
+
+  font-weight: bold;
+`;
+const TopsubBox = styled.div`
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: white;
+  border-bottom: 2px solid #5a25b0;
+  padding-left: 1rem;
+`;
+
+const BottomBox = styled.div`
+  flex: 2;
+  display: flex;
+  flex-direction: row;
+`;
+
+const SubBox = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e8e1f7;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #444;
+  cursor: pointer;
+  text-align: center;
+  padding: 10px;
+
+  &:not(:last-child) {
+    border-right: 2px solid #5a25b0;
+  }
+
+  &:hover {
+    background-color: #d3c6f3;
+  }
+`;
 // 경험 항목 타입 정의
 interface ExperienceItemInterface {
   title: string;
@@ -8,126 +89,6 @@ interface ExperienceItemInterface {
   duration: string;
   description: string;
 }
-
-// 컨테이너 스타일
-const ExperienceContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-
-  background-color: rgb(237, 231, 246);
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-  height: 100%;
-  width: 100%;
-  border-radius: 10px;
-  padding: 2rem;
-  box-sizing: border-box;
-  overflow-y: auto;
-`;
-
-const Title = styled.h2`
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #007bff;
-  margin-bottom: 5%;
-  text-align: center;
-`;
-
-// 경험 목록 컨테이너 스타일
-const ExperienceList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-// 개별 경험 항목 스타일
-const ExperienceItem = styled.div`
-  background-color: #fff;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  }
-`;
-
-// 회사 이름 스타일
-const Company = styled.h3`
-  font-size: 1.2rem;
-  color: #555;
-  margin-bottom: 0.5rem;
-`;
-
-// 설명 텍스트 스타일
-const Description = styled.div`
-  font-size: 0.9rem;
-  color: #666;
-  line-height: 1.4;
-`;
-
-const ReadMoreButton = styled.button`
-  margin-top: 0.5rem;
-  padding: 0.5rem 1rem;
-  font-size: 0.8rem;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
-
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-`;
-
-const ModalContent = styled.div`
-  background: #fff;
-  padding: 1.5rem;
-  border-radius: 8px;
-  max-width: 90%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-`;
-
-const ModalHeader = styled.h3`
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #007bff;
-`;
-
-const ModalCloseButton = styled.button`
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  font-size: 1.2rem;
-  cursor: pointer;
-  color: #666;
-
-  &:hover {
-    color: #000;
-  }
-`;
 
 // 경험 항목 목록
 const experiences: ExperienceItemInterface[] = [
@@ -171,53 +132,105 @@ const experiences: ExperienceItemInterface[] = [
       `,
   },
 ];
+// 개별 경험 항목 스타일
+const ExperienceItem = styled.div`
+  background-color: #fff;
+  padding: 0.1rem;
+`;
 
-// Experience 컴포넌트
-function Experience() {
-  const [modalContent, setModalContent] = useState<string | null>(null);
+// 회사 이름 스타일
+const Company = styled.h3`
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+`;
 
-  const openModal = (content: string) => setModalContent(content);
-  const closeModal = () => setModalContent(null);
+const Description = styled.div`
+  font-size: 1.2rem;
+  color: #666;
+  line-height: 1.4;
+`;
+const ExperienceList = styled.ul`
+  font-size: 1.1rem;
+  color: #666;
+  line-height: 1.6; /* 줄 간격 */
+  text-align: left; /* 왼쪽 정렬 */
+  list-style-type: none; /* 불필요한 기본 리스트 스타일 제거 */
+  padding: 0; /* 리스트의 기본 패딩 제거 */
+  margin: 0; /* 리스트의 기본 마진 제거 */
+  font-weight: 700;
+  li {
+    margin-bottom: 0.5rem; /* 각 리스트 항목 간격 설정 */
+  }
+  :nth-child(2) {
+    text-align: center;
+  }
+`;
+
+// 설명 텍스트 스타일
+const TopDescription = styled.ul`
+  font-size: 1rem;
+  font-weight: 400;
+  color: #5a25b0;
+  text-align: left;
+  line-height: 1.4;
+  margin-top: 10px;
+  padding-left: 20px;
+  font-family: "Poppins", sans-serif;
+
+  li {
+    margin-bottom: 10px;
+  }
+`;
+function ExperiencePage() {
+  const [selectedExperience, setSelectedExperience] = useState(experiences[0]);
 
   return (
     <ExperienceContainer>
-      <Title>Experiences</Title>
-      <ExperienceList>
-        {experiences.map((experience, index) => (
-          <ExperienceItem key={index}>
+      <OuterBox>
+        {/* 헤더 박스 */}
+        <HeaderBox>
+          <HeaderTitle>Experience</HeaderTitle>
+        </HeaderBox>
+
+        {/* 상단 박스 */}
+        <TopsubBox>
+          <ExperienceItem>
             <Description>
-              <strong>📅</strong> {experience.duration}
+              <strong>📅</strong> {selectedExperience.duration}
             </Description>
 
             <Company>
-              {experience.title} - {experience.company}
+              {selectedExperience.title} - {selectedExperience.company}
             </Company>
-            <Description>{experience.description.slice(0, 200)}...</Description>
-            <ReadMoreButton onClick={() => openModal(experience.description)}>
-              Read More
-            </ReadMoreButton>
-          </ExperienceItem>
-        ))}
-      </ExperienceList>
-
-      {modalContent && (
-        <ModalOverlay onClick={closeModal}>
-          <ModalContent onClick={(e) => e.stopPropagation()}>
-            <ModalCloseButton onClick={closeModal}>&times;</ModalCloseButton>
-            <ModalHeader>Details</ModalHeader>
-            <Description>
-              {modalContent
+            <TopDescription>
+              {selectedExperience.description
                 .split("•")
                 .filter((line) => line.trim() !== "")
                 .map((line, index) => (
-                  <p key={index}>• {line.trim()}</p>
+                  <li key={index}>{line.trim()}</li>
                 ))}
-            </Description>
-          </ModalContent>
-        </ModalOverlay>
-      )}
+            </TopDescription>
+          </ExperienceItem>
+        </TopsubBox>
+
+        {/* 하단 박스 */}
+        <BottomBox>
+          {experiences.map((experience, index) => (
+            <SubBox
+              key={index}
+              onMouseEnter={() => setSelectedExperience(experience)}
+            >
+              <ExperienceList>
+                <li>📅 {experience.duration}</li>
+                <li>{experience.company}</li>
+              </ExperienceList>
+            </SubBox>
+          ))}
+        </BottomBox>
+      </OuterBox>
     </ExperienceContainer>
   );
 }
 
-export default Experience;
+export default ExperiencePage;

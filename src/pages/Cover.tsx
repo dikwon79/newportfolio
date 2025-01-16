@@ -48,10 +48,11 @@ const MainTitle = styled.h1`
 const SubTitle = styled.h2`
   font-size: 1.5rem;
   font-family: "Arial", sans-serif;
-  font-weight: 300;
+  font-weight: 700;
   color: #595959;
   margin-top: 10px;
   letter-spacing: 0.8px;
+  text-align: right;
 
   @media (max-width: 768px) {
     font-size: 1.2rem;

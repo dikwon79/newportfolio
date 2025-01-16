@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
+
 // Styled Components
 const ProjectContainer = styled.div`
   display: flex;
@@ -9,7 +10,7 @@ const ProjectContainer = styled.div`
   height: 100%;
   border-radius: 10px;
   border-left: 1px solid #a263c9;
-  background: linear-gradient(to bottom, #b084cc, rgb(237, 231, 246));
+  background: linear-gradient(to bottom, #afcede, #c49ddb);
 
   box-sizing: border-box;
   padding: 5px;
@@ -25,32 +26,12 @@ const OuterBox = styled.div`
   overflow: hidden;
 `;
 
-const TopBox = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  border-bottom: 2px solid #5a25b0;
-`;
-
-const TopTitle = styled.div`
-  position: fixed;
-  font-family: "Georgia", serif;
-  top: 20px;
-  right: 50px;
-  font-size: 3rem;
-  color: #5a25b0;
-  font-weight: bold;
-`;
-
 const MiddleBox = styled.div`
-  flex: 5;
+  flex: 1;
   display: flex;
   justify-content: center; /* 중앙 정렬 */
   align-items: flex-start; /* 위쪽 정렬 */
   margin-top: 1px;
-
   padding-top: 0.6rem;
 `;
 
@@ -107,13 +88,14 @@ interface ProjectsSectionProps {
   projectData: Project[];
 }
 
-const CardVariants2 = {
+const CardVariants = {
   normal: {
     scale: 1,
+    zIndex: 1,
   },
   hover: {
-    scale: 2,
-    y: -240,
+    scaleX: 2, // 가로 방향으로만 2배 확대
+    scaleY: 2,
     zIndex: 999,
     transition: {
       delay: 0.5,
@@ -146,11 +128,11 @@ const ProjectList = styled.div`
   grid-template-columns: repeat(
     auto-fill,
     minmax(220px, 1fr)
-  ); /* 너비가 최소 220px이고, 자동으로 행을 채우도록 설정 */
-  grid-template-rows: auto; /* 행의 높이는 내용에 맞게 자동으로 설정 */
-  gap: 0.8rem;
+  ); /* 최소 220px, 최대 1fr */
+  grid-gap: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 `;
-
 const ProjectCard = styled(motion.div)`
   display: flex;
   flex-direction: column;
@@ -176,21 +158,6 @@ const ProjectCard = styled(motion.div)`
     transform-origin: bottom left;
   }
 `;
-const CardVariants = {
-  normal: {
-    scale: 1,
-    zIndex: 1,
-  },
-  hover: {
-    scaleX: 2, // 가로 방향으로만 2배 확대
-    scaleY: 2,
-    zIndex: 999,
-    transition: {
-      delay: 0.5,
-      type: "tween",
-    },
-  },
-};
 
 const ProjectTitle = styled.h3`
   font-size: 1.5rem;
@@ -231,6 +198,7 @@ const TechStack = styled.div`
 interface ProjectImgProps {
   src: string; // 이미지 URL 타입 정의
 }
+
 const ProjectImg = styled.div<ProjectImgProps>`
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -251,6 +219,7 @@ const ProjectVideo = styled.video<ProjectImgProps>`
   object-fit: cover;
   background: #000;
 `;
+
 const LinksContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -282,15 +251,10 @@ const LinksContainer = styled.div`
 `;
 
 // Component
-function ProjectPage({ projectData }: ProjectsSectionProps) {
+function ProjectSecondPage({ projectData }: ProjectsSectionProps) {
   return (
     <ProjectContainer>
       <OuterBox>
-        {/* 상단 박스 */}
-        <TopBox>
-          <TopTitle>Projects</TopTitle>
-        </TopBox>
-
         {/* Middle Box */}
         <MiddleBox>
           <ProjectList>
@@ -316,12 +280,12 @@ function ProjectPage({ projectData }: ProjectsSectionProps) {
                       muted
                       controls
                       width="100%"
-                      height="60%"
+                      height="40%"
                     />
                   ) : (
                     <ProjectImg src={`/projects/${project.img}`} />
                   )}
-                  {/*  <ProjectDetails>{project.description}</ProjectDetails>*/}
+                  <ProjectDetails>{project.description}</ProjectDetails>
                 </div>
                 <LinksContainer>
                   {project.githubLink ? (
@@ -374,4 +338,4 @@ function ProjectPage({ projectData }: ProjectsSectionProps) {
   );
 }
 
-export default ProjectPage;
+export default ProjectSecondPage;

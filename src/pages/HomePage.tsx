@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import developer from "../images/developer.webp";
+import developer from "../images/coder.jpeg";
 import linkedin from "../images/linkedin.png";
 import github from "../images/github.png";
 import email from "../images/email.png";

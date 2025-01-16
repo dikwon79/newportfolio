@@ -8,49 +8,70 @@ interface VolunteeringInterface {
   description: string;
 }
 
-// 컨테이너 스타일
+// Styled Components
 const VolunteeringContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-
-  background-color: rgb(237, 231, 246);
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-  padding: 2rem;
   width: 100%;
   height: 100%;
+  border-radius: 10px;
+  border-left: 1px solid #a263c9;
+  background: linear-gradient(to bottom, #8fbed6, #b084cc);
 
   box-sizing: border-box;
-  overflow-y: auto;
-
-  @media (max-width: 768px) {
-    padding: 1.5rem;
-  }
+  padding: 5px;
 `;
 
-const Title = styled.h2`
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #007bff;
-  margin-bottom: 5%;
-  text-align: center;
-
-  @media (max-width: 768px) {
-    font-size: 1.6rem;
-  }
-`;
-
-// 봉사활동 목록 컨테이너 스타일
-const VolunteeringList = styled.div`
+const OuterBox = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  width: 95%;
+  height: 95%;
+  border: 2px solid #5a25b0;
+  border-radius: 10px;
+  overflow: hidden;
 `;
 
-// 개별 봉사활동 항목 스타일
+const TopBox = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-bottom: 2px solid #5a25b0;
+`;
+
+const TopTitle = styled.div`
+  position: fixed;
+  font-family: "Georgia", serif;
+  top: 20px;
+  left: 50px;
+  font-size: 3rem;
+  color: #5a25b0;
+  font-weight: bold;
+`;
+
+const MiddleBox = styled.div`
+  flex: 5;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 1px;
+  border-bottom: 2px solid #5a25b0;
+  padding-top: 0.5rem;
+  overflow-y: auto;
+`;
+
+const VolunteeringList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  padding: 0;
+  box-sizing: border-box;
+`;
+
 const VolunteeringItem = styled.div`
   background-color: #fff;
   padding: 1rem;
@@ -62,35 +83,28 @@ const VolunteeringItem = styled.div`
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
-
-  @media (max-width: 768px) {
-    padding: 1rem;
-  }
 `;
 
-// 역할, 기관 스타일
 const RoleAndOrganization = styled.h3`
-  font-size: 1.4rem;
-  color: #007bff;
+  font-size: 1.2rem;
+  color: #555;
   margin-bottom: 0.5rem;
-
-  @media (max-width: 768px) {
-    font-size: 1.2rem;
-  }
 `;
 
-// 설명 텍스트 스타일
-const Description = styled.div`
-  font-size: 1rem;
+const Description = styled.ul`
+  font-size: 1.2rem;
   color: #666;
-  line-height: 1.6;
-
-  @media (max-width: 768px) {
-    font-size: 0.9rem;
-  }
+  line-height: 1.4;
 `;
 
-// 봉사활동 항목 목록
+const Duration = styled.div`
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #5a25b0;
+  margin-bottom: 0.5rem;
+`;
+
+// 봉사활동 데이터
 const volunteering: VolunteeringInterface[] = [
   {
     role: "Coding Bootcamp Mentor",
@@ -108,29 +122,31 @@ const volunteering: VolunteeringInterface[] = [
 function Volunteering() {
   return (
     <VolunteeringContainer>
-      <Title>Volunteering</Title>
-      <VolunteeringList>
-        {volunteering.map((volunteer, index) => (
-          <VolunteeringItem key={index}>
-            <Description>
-              <strong>📅</strong> {volunteer.duration}
-            </Description>
-            <RoleAndOrganization>
-              {volunteer.role} - {volunteer.organization}
-            </RoleAndOrganization>
-            <Description>
-              <ul>
-                {volunteer.description
-                  .split("•")
-                  .filter((line) => line.trim() !== "")
-                  .map((line, index) => (
-                    <li key={index}>• {line.trim()}</li>
-                  ))}
-              </ul>
-            </Description>
-          </VolunteeringItem>
-        ))}
-      </VolunteeringList>
+      <OuterBox>
+        <TopBox>
+          <TopTitle>Volunteering</TopTitle>
+        </TopBox>
+        <MiddleBox>
+          <VolunteeringList>
+            {volunteering.map((volunteer, index) => (
+              <VolunteeringItem key={index}>
+                <Duration>📅 {volunteer.duration}</Duration>
+                <RoleAndOrganization>
+                  {volunteer.role} - {volunteer.organization}
+                </RoleAndOrganization>
+                <Description>
+                  {volunteer.description
+                    .split("•")
+                    .filter((line) => line.trim() !== "")
+                    .map((line, idx) => (
+                      <li key={idx}>{line.trim()}</li>
+                    ))}
+                </Description>
+              </VolunteeringItem>
+            ))}
+          </VolunteeringList>
+        </MiddleBox>
+      </OuterBox>
     </VolunteeringContainer>
   );
 }
