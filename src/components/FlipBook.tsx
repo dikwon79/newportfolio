@@ -4,7 +4,6 @@ import Skills from "../pages/Skills";
 import Experience from "../pages/Experiences";
 import { useEffect, useRef, useState } from "react";
 import Education from "../pages/Education";
-import ProjectsSection from "../images/pro";
 import Volunteering from "../pages/Volunteering";
 import Contact from "../pages/Contact";
 import { myPracticum, myselling } from "../data/projectData";
@@ -15,17 +14,33 @@ import FirstPage from "../pages/Cover";
 import Contents from "../pages/firstPage";
 import ProjectPage from "../pages/ProjectsPage";
 import ProjectSecondPage from "../pages/projectSecondPage";
+import barcode from "../images/barcode.png";
 
 // 첫 번째 페이지 배경 설정
 const FirstPageBackground = styled.div`
   height: 100%;
   width: 100%;
   background: linear-gradient(to bottom, #f5e3cb, #b084cc);
-
   border-radius: 10px;
+  position: relative;
 
   @media (max-width: 768px) {
     height: 50vh;
+  }
+
+  /* 오른쪽 하단에 바코드 이미지 추가 */
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 100px; /* 이미지 너비 */
+    height: 100px; /* 이미지 높이 */
+    background-image: url(${barcode}); /* 바코드 이미지 경로 */
+    background-size: contain; /* 이미지 크기 조정 */
+    background-repeat: no-repeat; /* 반복 방지 */
+    background-position: center; /* 이미지 위치 */
+    opacity: 0.8; /* 투명도 조정 */
   }
 `;
 
@@ -46,8 +61,6 @@ const pages = [
   { title: "Education", component: <Education /> },
   { title: "Volunteering", component: <Volunteering /> },
 
-  { title: "Contact", component: <Contact /> },
-  { title: "last cover", component: <FirstPageBackground /> },
   { title: "last cover", component: <FirstPageBackground /> },
 ];
 

@@ -143,11 +143,8 @@ const SectionTitle = styled.h2`
 
 const ProjectList = styled.div`
   display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(220px, 1fr)
-  ); /* 너비가 최소 220px이고, 자동으로 행을 채우도록 설정 */
-  grid-template-rows: auto; /* 행의 높이는 내용에 맞게 자동으로 설정 */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-rows: auto;
   gap: 0.8rem;
 `;
 
@@ -155,7 +152,7 @@ const ProjectCard = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: space-between; /* 상단과 하단에 공간 분배 */
-  background-color: #fff;
+  background-color: #e8e1f7;
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -163,13 +160,13 @@ const ProjectCard = styled(motion.div)`
   transition: transform 0.2s ease-in-out;
 
   &:first-child {
-    transform-origin: top left;
+    transform-origin: center left;
   }
   &:nth-child(2) {
-    transform-origin: center top;
+    transform-origin: center center;
   }
   &:nth-child(3) {
-    transform-origin: top right;
+    transform-origin: center right;
   }
 
   &:nth-child(4) {
@@ -195,7 +192,7 @@ const CardVariants = {
 const ProjectTitle = styled.h3`
   font-size: 1.5rem;
   font-weight: bold;
-  color: #007bff;
+  color: #5a25b0;
   margin-bottom: 0.5rem;
   margin-top: 0;
   @media (max-width: 768px) {
@@ -207,6 +204,12 @@ const ProjectDetails = styled.div`
   font-size: 0.67rem;
   color: #555;
   margin-bottom: 0.5rem;
+  display: none;
+
+  /* On hover, show the details */
+  ${ProjectCard}:hover & {
+    display: block;
+  }
 
   @media (max-width: 768px) {
     font-size: 0.9rem;
@@ -316,12 +319,12 @@ function ProjectPage({ projectData }: ProjectsSectionProps) {
                       muted
                       controls
                       width="100%"
-                      height="60%"
+                      height="50%"
                     />
                   ) : (
                     <ProjectImg src={`/projects/${project.img}`} />
                   )}
-                  {/*  <ProjectDetails>{project.description}</ProjectDetails>*/}
+                  <ProjectDetails>{project.description}</ProjectDetails>
                 </div>
                 <LinksContainer>
                   {project.githubLink ? (

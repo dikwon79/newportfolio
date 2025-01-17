@@ -123,13 +123,13 @@ const experiences: ExperienceItemInterface[] = [
     company: "MH distribution",
     duration: "Jun 2015 - Jul 2021",
     description: `
-    • Developed a program using C# to consolidate customer orders, generate shipping labels, and issue dispatch instructions to warehouse
-     workers. This innovation reduced the time required to generate shipping labels from 20 minutes to just 3 minutes, significantly improving
-     operational efficiency.
-    • Designed and implemented a Python-based scanning program to address the inefficiency in handling returns for a home shopping
-     company. The program digitized the return process, ensuring accurate and systematic management of returned goods.
-    • Oversaw all inbound and outbound operations at the Icheon logistics center, ensuring seamless inventory flow and operational efficiency.
-      `,
+    • As an IT specialist, I managed the entire computer and network infrastructure of the big logistics center.
+    • Developed a Warehouse Management System (WMS) using PHP and Delphi, integrating a MySQL database. This system significantly 
+     reduced inventory losses(less than 0.5%), decreased employee workload, and enhanced my company's reputation for effective inventory
+     management.
+    • Notably, the order management department was able to maintain accurate physical and digital inventory records, ensuring optimal stock 
+     levels.
+    `,
   },
 ];
 // 개별 경험 항목 스타일

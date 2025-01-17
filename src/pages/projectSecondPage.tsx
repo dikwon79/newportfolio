@@ -137,7 +137,7 @@ const ProjectCard = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: space-between; /* 상단과 하단에 공간 분배 */
-  background-color: #fff;
+  background-color: #e8e1f7;
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -162,7 +162,7 @@ const ProjectCard = styled(motion.div)`
 const ProjectTitle = styled.h3`
   font-size: 1.5rem;
   font-weight: bold;
-  color: #007bff;
+  color: #7f5fb2;
   margin-bottom: 0.5rem;
   margin-top: 0;
   @media (max-width: 768px) {

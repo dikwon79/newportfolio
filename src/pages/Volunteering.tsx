@@ -73,7 +73,7 @@ const VolunteeringList = styled.div`
 `;
 
 const VolunteeringItem = styled.div`
-  background-color: #fff;
+  background-color: #e8e1f7;
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -93,7 +93,7 @@ const RoleAndOrganization = styled.h3`
 
 const Description = styled.ul`
   font-size: 1.2rem;
-  color: #666;
+  color: #5a25b0;
   line-height: 1.4;
 `;
 
