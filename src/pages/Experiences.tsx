@@ -22,43 +22,61 @@ const OuterBox = styled.div`
   border: 2px solid #5a25b0;
   border-radius: 10px;
   overflow: hidden;
+
+  /* 모바일 스크롤 */
+  @media (max-width: 768px) {
+    overflow-y: auto;
+  }
 `;
 
 const HeaderBox = styled.div`
-  flex: 1.35;
-
+  flex: 0.5;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: left; /* 가로 중앙 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  background-color: white;
+  padding-left: 1.5rem;
 
-  background-color: white; /* 흰색 배경 */
+  @media (max-width: 768px) {
+    justify-content: center; /* 가로 중앙 정렬 */
+    border-bottom: 2px solid #5a25b0;
+    padding-left: 0;
+  }
 `;
+
 const HeaderTitle = styled.div`
-  position: fixed;
-  font-family: "Georgia", serif; /* 심플한 교과서 느낌의 폰트 */
-  top: 20px; /* 상단에서 3px 만큼 아래로 이동 */
-  left: 50px; /* 왼쪽에서 10px 만큼 오른쪽으로 이동 */
-  font-size: 3rem;
-
+  font-family: "Georgia", serif;
+  font-size: 3rem; /* 폰트 크기 */
   color: #5a25b0;
-
   font-weight: bold;
+  text-align: center; /* 텍스트 중앙 정렬 */
 `;
+
 const TopsubBox = styled.div`
   flex: 3;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  gap: 20px;
   background-color: white;
   border-bottom: 2px solid #5a25b0;
-  padding-left: 1rem;
+
+  @media (max-width: 768px) {
+    /* 모바일에서는 전체 나열 */
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
 `;
 
 const BottomBox = styled.div`
   flex: 2;
   display: flex;
   flex-direction: row;
+
+  @media (max-width: 768px) {
+    display: none; /* 모바일에서는 하단 탭 제거 */
+  }
 `;
 
 const SubBox = styled.div`
@@ -67,7 +85,7 @@ const SubBox = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #e8e1f7;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   font-weight: bold;
   color: #444;
   cursor: pointer;
@@ -82,7 +100,7 @@ const SubBox = styled.div`
     background-color: #d3c6f3;
   }
 `;
-// 경험 항목 타입 정의
+
 interface ExperienceItemInterface {
   title: string;
   company: string;
@@ -90,7 +108,6 @@ interface ExperienceItemInterface {
   description: string;
 }
 
-// 경험 항목 목록
 const experiences: ExperienceItemInterface[] = [
   {
     title: "Software Engineer",
@@ -132,13 +149,13 @@ const experiences: ExperienceItemInterface[] = [
     `,
   },
 ];
-// 개별 경험 항목 스타일
+
 const ExperienceItem = styled.div`
-  background-color: #fff;
-  padding: 0.1rem;
+  margin: 10px 10px;
+  padding: 5px;
+  font-family: "Poppins", sans-serif;
 `;
 
-// 회사 이름 스타일
 const Company = styled.h3`
   font-size: 1.2rem;
   color: #555;
@@ -150,24 +167,7 @@ const Description = styled.div`
   color: #666;
   line-height: 1.4;
 `;
-const ExperienceList = styled.ul`
-  font-size: 1.1rem;
-  color: #666;
-  line-height: 1.6; /* 줄 간격 */
-  text-align: left; /* 왼쪽 정렬 */
-  list-style-type: none; /* 불필요한 기본 리스트 스타일 제거 */
-  padding: 0; /* 리스트의 기본 패딩 제거 */
-  margin: 0; /* 리스트의 기본 마진 제거 */
-  font-weight: 700;
-  li {
-    margin-bottom: 0.5rem; /* 각 리스트 항목 간격 설정 */
-  }
-  :nth-child(2) {
-    text-align: center;
-  }
-`;
 
-// 설명 텍스트 스타일
 const TopDescription = styled.ul`
   font-size: 1rem;
   font-weight: 400;
@@ -182,52 +182,89 @@ const TopDescription = styled.ul`
     margin-bottom: 10px;
   }
 `;
+
+const Content = styled.div`
+  margin: 5px 1px;
+  padding: 10px;
+  background-color: #e8e1f7;
+  font-family: "Poppins", sans-serif;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
 function ExperiencePage() {
   const [selectedExperience, setSelectedExperience] = useState(experiences[0]);
+
+  const isMobile = window.innerWidth <= 768;
 
   return (
     <ExperienceContainer>
       <OuterBox>
-        {/* 헤더 박스 */}
         <HeaderBox>
           <HeaderTitle>Experience</HeaderTitle>
         </HeaderBox>
 
-        {/* 상단 박스 */}
         <TopsubBox>
-          <ExperienceItem>
-            <Description>
-              <strong>📅</strong> {selectedExperience.duration}
-            </Description>
+          {isMobile ? (
+            // 모바일: 모든 경험 목록 나열
+            experiences.map((experience, index) => (
+              <ExperienceItem key={index}>
+                <Description>
+                  <strong>📅</strong> {experience.duration}
+                </Description>
+                <Content>
+                  <Company>
+                    {experience.title} - {experience.company}
+                  </Company>
+                  <TopDescription>
+                    {experience.description
+                      .split("•")
+                      .filter((line) => line.trim() !== "")
+                      .map((line, idx) => (
+                        <li key={idx}>{line.trim()}</li>
+                      ))}
+                  </TopDescription>
+                </Content>
+              </ExperienceItem>
+            ))
+          ) : (
+            // 데스크톱: 선택된 내용 표시
+            <ExperienceItem>
+              <Description>
+                <strong>📅</strong> {selectedExperience.duration}
+              </Description>
 
-            <Company>
-              {selectedExperience.title} - {selectedExperience.company}
-            </Company>
-            <TopDescription>
-              {selectedExperience.description
-                .split("•")
-                .filter((line) => line.trim() !== "")
-                .map((line, index) => (
-                  <li key={index}>{line.trim()}</li>
-                ))}
-            </TopDescription>
-          </ExperienceItem>
+              <Company>
+                {selectedExperience.title} - {selectedExperience.company}
+              </Company>
+              <TopDescription>
+                {selectedExperience.description
+                  .split("•")
+                  .filter((line) => line.trim() !== "")
+                  .map((line, index) => (
+                    <li key={index}>{line.trim()}</li>
+                  ))}
+              </TopDescription>
+            </ExperienceItem>
+          )}
         </TopsubBox>
 
-        {/* 하단 박스 */}
-        <BottomBox>
-          {experiences.map((experience, index) => (
-            <SubBox
-              key={index}
-              onMouseEnter={() => setSelectedExperience(experience)}
-            >
-              <ExperienceList>
-                <li>📅 {experience.duration}</li>
-                <li>{experience.company}</li>
-              </ExperienceList>
-            </SubBox>
-          ))}
-        </BottomBox>
+        {!isMobile && (
+          <BottomBox>
+            {experiences.map((experience, index) => (
+              <SubBox
+                key={index}
+                onMouseEnter={() => setSelectedExperience(experience)}
+              >
+                <div>
+                  <strong>📅</strong> {experience.duration}
+                  <br />
+                  {experience.company}
+                </div>
+              </SubBox>
+            ))}
+          </BottomBox>
+        )}
       </OuterBox>
     </ExperienceContainer>
   );

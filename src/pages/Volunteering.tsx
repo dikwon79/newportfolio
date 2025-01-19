@@ -34,24 +34,28 @@ const OuterBox = styled.div`
 `;
 
 const TopBox = styled.div`
-  flex: 1;
+  flex: 0.5;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: left;
+  align-items: flex-start;
   background-color: white;
   border-bottom: 2px solid #5a25b0;
+  padding-left: 1.5rem;
+  @media (max-width: 768px) {
+    flex: 0.4;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: left;
+    padding-left: 0;
+  }
 `;
 
 const TopTitle = styled.div`
-  position: fixed;
   font-family: "Georgia", serif;
-  top: 20px;
-  left: 50px;
-  font-size: 3rem;
+  font-size: 3rem; /* 폰트 크기 */
   color: #5a25b0;
   font-weight: bold;
+  text-align: center; /* 텍스트 중앙 정렬 */
 `;
-
 const MiddleBox = styled.div`
   flex: 5;
   display: flex;

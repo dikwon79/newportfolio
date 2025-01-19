@@ -23,25 +23,31 @@ const OuterBox = styled.div`
   border: 2px solid #5a25b0;
   border-radius: 10px;
   overflow: hidden;
+  @media (max-width: 768px) {
+    overflow-y: scroll;
+  }
 `;
 
 const TopBox = styled.div`
-  flex: 1;
+  flex: 0.5;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: right;
+  align-items: flex-start;
   background-color: white;
   border-bottom: 2px solid #5a25b0;
+  padding-right: 1.5rem;
+  @media (max-width: 768px) {
+    justify-content: center; /* 가로 중앙 정렬 */
+    padding-right: 0;
+  }
 `;
 
 const TopTitle = styled.div`
-  position: fixed;
   font-family: "Georgia", serif;
-  top: 20px;
-  right: 50px;
-  font-size: 3rem;
+  font-size: 3rem; /* 폰트 크기 */
   color: #5a25b0;
   font-weight: bold;
+  text-align: center; /* 텍스트 중앙 정렬 */
 `;
 
 const MiddleBox = styled.div`
@@ -213,6 +219,7 @@ const ProjectDetails = styled.div`
 
   @media (max-width: 768px) {
     font-size: 0.9rem;
+    display: block;
   }
 `;
 

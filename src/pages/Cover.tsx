@@ -18,36 +18,47 @@ const TitleContainer = styled.div`
   text-align: center;
   margin-bottom: 20px;
 
-  // 오른쪽 하단으로 배치
-  position: fixed; /* 화면에 고정(스크롤 따라오게) */
-  right: 20px; /* 오른쪽 여백 */
-  bottom: 200px; /* 아래쪽 여백 */
+  position: fixed;
+  right: 20px;
+  bottom: 200px;
 
   @media (max-width: 768px) {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Horizontally centers the content */
+    align-items: center; /* Vertically centers the content */
+    top: 50%;
+    left: 50%;
+    transform: translate(
+      -50%,
+      -50%
+    ); /* Moves the element to the exact center */
     padding: 20px 30px;
-    right: 10px; /* 반응형에서 오른쪽 여백 줄이기 */
-    bottom: 10px; /* 반응형에서 아래쪽 여백 줄이기 */
+    width: 80%; /* Adjust width for mobile */
+    margin: 0; /* Remove margin */
+    height: auto;
   }
 `;
 
 // 제목 스타일
 const MainTitle = styled.h1`
   font-size: 3rem;
-  font-family: "Georgia", serif; /* 심플한 교과서 느낌의 폰트 */
+  font-family: "Georgia", serif;
   font-weight: bold;
   color: white;
   margin: 0;
   letter-spacing: 1.2px;
 
   @media (max-width: 768px) {
-    font-size: 2.2rem;
+    font-size: 3rem;
   }
 `;
 
 // 부제목 스타일
 const SubTitle = styled.h2`
   font-size: 1.5rem;
-  font-family: "Arial", sans-serif;
+  font-family: "ROBOTO", sans-serif;
   font-weight: 700;
   color: #595959;
   margin-top: 10px;
@@ -55,7 +66,7 @@ const SubTitle = styled.h2`
   text-align: right;
 
   @media (max-width: 768px) {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
   }
 `;
 
@@ -63,8 +74,8 @@ const Cover = () => {
   return (
     <CoverBackground>
       <TitleContainer>
-        <MainTitle>PORTFOLIO</MainTitle> {/* 교과서 제목 */}
-        <SubTitle>Dongil Kwon</SubTitle> {/* 부제 */}
+        <MainTitle>PORTFOLIO</MainTitle>
+        <SubTitle>Dongil Kwon</SubTitle>
       </TitleContainer>
     </CoverBackground>
   );

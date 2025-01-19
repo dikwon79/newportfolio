@@ -5,48 +5,19 @@ import Experience from "../pages/Experiences";
 import { useEffect, useRef, useState } from "react";
 import Education from "../pages/Education";
 import Volunteering from "../pages/Volunteering";
-import Contact from "../pages/Contact";
 import { myPracticum, myselling } from "../data/projectData";
 import { IFlipSetting } from "../types/settings";
 import FlipPage from "react-pageflip";
 import { motion } from "framer-motion"; // Import motion
 import FirstPage from "../pages/Cover";
-import Contents from "../pages/firstPage";
+import ContentsList from "../pages/ContentsList";
 import ProjectPage from "../pages/ProjectsPage";
 import ProjectSecondPage from "../pages/projectSecondPage";
-import barcode from "../images/barcode.png";
-
-// 첫 번째 페이지 배경 설정
-const FirstPageBackground = styled.div`
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(to bottom, #f5e3cb, #b084cc);
-  border-radius: 10px;
-  position: relative;
-
-  @media (max-width: 768px) {
-    height: 50vh;
-  }
-
-  /* 오른쪽 하단에 바코드 이미지 추가 */
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    width: 100px; /* 이미지 너비 */
-    height: 100px; /* 이미지 높이 */
-    background-image: url(${barcode}); /* 바코드 이미지 경로 */
-    background-size: contain; /* 이미지 크기 조정 */
-    background-repeat: no-repeat; /* 반복 방지 */
-    background-position: center; /* 이미지 위치 */
-    opacity: 0.8; /* 투명도 조정 */
-  }
-`;
+import LastPageBackground from "../pages/LastCover";
 
 const pages = [
   { title: "cover", component: <FirstPage /> },
-  { title: "Contents", component: <Contents /> },
+  { title: "Contents", component: <ContentsList /> },
   { title: "Home", component: <HomePage /> },
   { title: "SKILL", component: <Skills /> },
   { title: "Experience", component: <Experience /> },
@@ -61,7 +32,7 @@ const pages = [
   { title: "Education", component: <Education /> },
   { title: "Volunteering", component: <Volunteering /> },
 
-  { title: "last cover", component: <FirstPageBackground /> },
+  { title: "last cover", component: <LastPageBackground /> },
 ];
 
 const FlipbookContainer = styled.div`
@@ -92,15 +63,71 @@ const Book = styled(FlipPage)<IFlipSetting>`
   }
 
   @media (max-width: 768px) {
-    width: 100%;
     height: 100%;
+    .page {
+      transform: rotateX(0); /* 위로 넘기는 효과 */
+    }
   }
 `;
+interface NavigationButtonProps {
+  $position: "left" | "right";
+  onClick: () => void; // 클릭 이벤트 핸들러
+  children: React.ReactNode; // 버튼 내용
+}
 
+// 버튼 스타일 정의
+const NavigationButton = styled.button<
+  NavigationButtonProps & { hidden?: boolean }
+>`
+  position: absolute;
+  top: 40px;
+  ${({ $position }) => $position === "left" && `left: 20px;`}
+  ${({ $position }) => $position === "right" && `right: 20px;`}
+
+  padding: 5px 10px;
+  background-color: #bc98ef;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 1000;
+  display: ${({ hidden }) => (hidden ? "none" : "block")};
+  &:hover {
+    background-color: #8c6dba;
+  }
+
+  @media (max-width: 768px) {
+    top: 5px;
+    font-size: 14px;
+  }
+`;
 const FlipBook = () => {
   const [hasFlipped, setHasFlipped] = useState(false);
   const flipRef = useRef<any>(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // 초기값 설정
+  const [screenSize, setScreenSize] = useState([
+    window.innerWidth,
+    window.innerHeight,
+  ]);
+  const [currentPage, setCurrentPage] = useState(0);
 
+  const handleFlipEvent = (e: any) => {
+    console.log("page flipped", e.data);
+    setCurrentPage(e.data);
+  };
+  const handleNextPage = () => {
+    console.log("Next button clicked!");
+    if (flipRef.current) {
+      flipRef.current.pageFlip().flipNext();
+    }
+  };
+  const handlePrevPage = () => {
+    console.log("Prev button clicked!");
+    if (flipRef.current) {
+      flipRef.current.pageFlip().turnToPrevPage();
+    }
+  };
   // Motion animation for scaling
   const scaleVariants = {
     initial: {
@@ -116,6 +143,18 @@ const FlipBook = () => {
 
   // 페이지 로드 후 자동으로 첫 페이지 넘기기
   useEffect(() => {
+    const handleResize = () => {
+      const isNowMobile = window.innerWidth <= 768;
+      setIsMobile(isNowMobile);
+      setScreenSize([window.innerWidth, window.innerHeight]);
+      console.log("Window width:", window.innerWidth, "isMobile:", isNowMobile);
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    console.log(isMobile);
+
     setHasFlipped(true);
     const autoFlip = setTimeout(() => {
       if (flipRef.current) {
@@ -125,29 +164,30 @@ const FlipBook = () => {
 
     return () => {
       clearTimeout(autoFlip);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
   const flipSettings: IFlipSetting = {
     startPage: 0,
     size: "fixed",
-    width: 750,
-    height: 700,
+    width: isMobile ? screenSize[0] : 750,
+    height: isMobile ? screenSize[1] : 700,
     minWidth: 300,
     maxWidth: 100,
     minHeight: 400,
     maxHeight: 500,
     drawShadow: true,
     flippingTime: 1000,
-    usePortrait: false,
+    usePortrait: isMobile,
     startZIndex: 1,
     autoSize: true,
     maxShadowOpacity: 0.5,
     showCover: true,
     mobileScrollSupport: true,
-    clickEventForward: false,
-    useMouseEvents: true,
-    swipeDistance: 5,
+    clickEventForward: true,
+    useMouseEvents: !isMobile,
+    swipeDistance: 1,
     showPageCorners: true,
     disableFlipByClick: true,
   };
@@ -169,14 +209,31 @@ const FlipBook = () => {
         <Book
           {...flipSettings}
           ref={flipRef}
-          style={{}}
-          onFlip={(e) => console.log("Page flipped:", e)}
+          style={{
+            flexDirection: isMobile ? "column" : "row", // 모바일에서는 위아래 스크롤
+          }}
+          onFlip={handleFlipEvent}
           className="flip-book"
         >
           {pages.map((page, index) => (
             <div key={index}>{page.component}</div>
           ))}
         </Book>
+        {/* ---- 추가한 두 개의 버튼 ---- */}
+        <NavigationButton
+          $position="left"
+          onClick={handlePrevPage}
+          hidden={currentPage === 0 || !isMobile}
+        >
+          prev
+        </NavigationButton>
+        <NavigationButton
+          $position="right"
+          onClick={handleNextPage}
+          hidden={currentPage === pages.length - 1 || !isMobile}
+        >
+          next
+        </NavigationButton>
       </motion.div>
     </FlipbookContainer>
   );
